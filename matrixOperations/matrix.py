@@ -36,3 +36,21 @@ print(f"sigma_x_16 * sigma_y_16 * sigma_z_16 = {sigma_xyz_16}")
 
 # Observamos que las matrices producen la matriz identidad cuando son elevadas a una potencia par.
 # Por otro lado, al elevarse a potencias impares devuelven la matriz original.
+
+test = [[1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]]
+
+test2 = [[1, 2],
+         [1, 3],
+         [2, 4]]
+
+print(matrix_addition(test, test2))
+
+print(matrix_multiplication(test, test2))
+
+print(matrix_transposition(test))
+
+print(e)
+
+print(pi)
