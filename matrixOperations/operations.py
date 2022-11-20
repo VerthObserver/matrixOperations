@@ -1,8 +1,10 @@
 
-from math import factorial, pi, e
+from math import factorial, pi, sin, cos
+
+from copy import deepcopy
 
 
-def dummy_matrix(matrix1, matrix2):
+def m_dummy(matrix1, matrix2):
     dummy = []
     for i in range(len(matrix2)):
         dummy.append([])
@@ -11,7 +13,7 @@ def dummy_matrix(matrix1, matrix2):
     return dummy
 
 
-def num_dummy_matrix(row, column):
+def m_num_dummy(row, column):
     dummy = []
     for i in range(row):
         dummy.append([])
@@ -20,61 +22,75 @@ def num_dummy_matrix(row, column):
     return dummy
 
 
-def identity_matrix(matrix):
+def m_identity(matrix):
     if len(matrix) != len(matrix[0]):
         return "Matrix must be square."
-    identity = dummy_matrix(matrix, matrix)
+    identity = m_dummy(matrix, matrix)
     for i in range(len(identity)):
-        for j in range(len(identity)):
-            if i == j:
-                identity[i][j] = 1
+        identity[i][i] = 1
     return identity
 
 
-def matrix_transposition(matrix):
-    matrix_transpose = num_dummy_matrix(len(matrix[0]), len(matrix))
+def m_num_identity(dimension):
+    identity = m_num_dummy(dimension, dimension)
+    for i in range(len(identity)):
+        identity[i][i] = 1
+    return identity
+
+
+def m_trace(matrix):
+    if len(matrix) != len(matrix[0]):
+        return "Matrix must be square."
+    trace = 0
+    for i in range(len(matrix)):
+        trace += matrix[i][i]
+    return trace
+
+
+def m_transposition(matrix):
+    m_transpose = m_num_dummy(len(matrix[0]), len(matrix))
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
-            matrix_transpose[j][i] = matrix[i][j]
-    return matrix_transpose
+            m_transpose[j][i] = matrix[i][j]
+    return m_transpose
 
 
-def matrix_scaling(matrix, scalar):
-    matrix_scaled = dummy_matrix(matrix, matrix)
+def m_scaling(scalar, matrix):
+    m_scaled = deepcopy(matrix)
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
-            matrix_scaled[i][j] = scalar * matrix[i][j]
-    return matrix_scaled
+            m_scaled[i][j] = matrix[i][j] * scalar
+    return m_scaled
 
 
-def matrix_addition(matrix1, matrix2):
+def m_addition(matrix1, matrix2):
     if len(matrix1) != len(matrix2) or len(matrix1[0]) != len(matrix2[0]):
         return "Matrices must have the same dimension."
-    matrix_sum = dummy_matrix(matrix1, matrix2)
+    m_sum = deepcopy(matrix1)
     for i in range(len(matrix1)):
         for j in range(len(matrix1[0])):
-            matrix_sum[i][j] = matrix1[i][j] + matrix2[i][j]
-    return matrix_sum
+            m_sum[i][j] += matrix2[i][j]
+    return m_sum
 
 
-def matrix_multiplication(matrix1, matrix2):
+def m_multiplication(matrix1, matrix2):
     if len(matrix1) != len(matrix2[0]):
         return "The number of rows in the first matrix must be equal to the number of columns in the second one."
-    matrix_product = dummy_matrix(matrix1, matrix2)
+    m_product = m_dummy(matrix1, matrix2)
     for i in range(len(matrix1[0])):
         for j in range(len(matrix2)):
             for k in range(len(matrix1)):
-                matrix_product[j][i] += matrix2[j][k] * matrix1[k][i]
-    return matrix_product
+                m_product[j][i] += matrix2[j][k] * matrix1[k][i]
+    return m_product
 
 
-def matrix_exponentiation(matrix, exponent=1):
+def m_exponentiation(matrix, exponent=1):
     if len(matrix) != len(matrix[0]):
         return "Matrix must be square."
-    matrix_power = identity_matrix(matrix)
+    m_power = m_identity(matrix)
     for n in range(0, exponent):
-        matrix_power = matrix_multiplication(matrix_power, matrix)
-    return matrix_power
+        m_power = m_multiplication(m_power, matrix)
+    return m_power
 
 
 def exponential(x, terms):
@@ -84,12 +100,25 @@ def exponential(x, terms):
     return exp
 
 
-def matrix_exponential(matrix, terms):
+def m_exponential(matrix, terms):
     if len(matrix) != len(matrix[0]):
         return "Matrix must be square."
-    matrix_exp = dummy_matrix(matrix, matrix)
+    m_exp = m_dummy(matrix, matrix)
     for n in range(terms):
-        matrix_power = matrix_exponentiation(matrix, n)
-        matrix_term = matrix_scaling(matrix_power, 1/factorial(n))
-        matrix_exp = matrix_addition(matrix_term, matrix_exp)
-    return matrix_exp
+        m_power = m_exponentiation(matrix, n)
+        m_term = m_scaling(1/factorial(n), m_power)
+        m_exp = m_addition(m_term, m_exp)
+    return m_exp
+
+
+def complex_rounder(number):
+    rounded = round(number.real) + round(number.imag) * 1j
+    return rounded
+
+
+def m_rounder(matrix):
+    rounded = deepcopy(matrix)
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            rounded[i][j] = round(matrix[i][j])
+    return rounded
