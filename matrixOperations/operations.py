@@ -109,16 +109,3 @@ def m_exponential(matrix, terms):
         m_term = m_scaling(1/factorial(n), m_power)
         m_exp = m_addition(m_term, m_exp)
     return m_exp
-
-
-def complex_rounder(number):
-    rounded = round(number.real) + round(number.imag) * 1j
-    return rounded
-
-
-def m_rounder(matrix):
-    rounded = deepcopy(matrix)
-    for i in range(len(matrix)):
-        for j in range(len(matrix[0])):
-            rounded[i][j] = round(matrix[i][j])
-    return rounded

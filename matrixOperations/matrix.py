@@ -1,7 +1,7 @@
 
 from operations import *
 
-# Primer ejercicio.
+# First exercise.
 
 C = [[2, 1, -2],
      [-2, -3, 0],
@@ -24,7 +24,7 @@ result = m_addition(m_addition(Id,
 print(f"1 = {result}")
 
 
-# Segundo ejercicio.
+# Second exercise.
 
 sigma_x = [[0, 1],
            [1, 0]]
