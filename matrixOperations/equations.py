@@ -6,10 +6,10 @@ test = [[0, 1, 0, 0, 2],
         [0, 0, 1, 0, 2],
         [1, 0, 0, 0, 3]]
 
+# Check if the system has one solution or infinite (whether the matrix is square).
 
 def sorter(system):
     sorted_system = deepcopy(system)
-    print(sorted_system)
     for i in range(len(system)):
         if sorted_system[i][i] != 0:
             continue
