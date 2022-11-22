@@ -1,5 +1,6 @@
 
 from operations import *
+from math import pi, sin, cos
 
 # First exercise.
 

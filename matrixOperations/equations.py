@@ -1,8 +1,8 @@
 
-from operations import *
+from operations import deepcopy, m_num_dummy, m_multiplication
 
-test = [[0, 1, 0, 0, 0],
-        [0, 0, 0, 1, 1],
+test = [[0, 1, 0, 0, 2],
+        [0, 0, 0, 1, 0],
         [0, 0, 1, 0, 2],
         [1, 0, 0, 0, 3]]
 
@@ -24,7 +24,7 @@ def sorter(system):
     return sorted_system
 
 
-print(sorter(test))
+in_system = sorter(test)
 
 
 def row_scaling(scalar, row):
@@ -43,13 +43,13 @@ def row_addition(row1, row2):
     return row_sum
 
 
-in_system = [[5, 2, 3, 8, 9],
-             [3, 2, 1, 6, 10],
-             [8, 3, 7, 5, 11],
-             [13, 2, 12, 32, 1]]
+# in_system = [[5, 2, 3, 8, 9],
+            # [3, 2, 1, 6, 10],
+            # [8, 3, 7, 5, 11],
+            # [13, 2, 12, 32, 1]]
 
 
-def upper_triangle(system):
+def triangulator(system):
     result = deepcopy(system)
     for i in range(len(system)):
         for j in range(i + 1, len(system)):
@@ -59,7 +59,7 @@ def upper_triangle(system):
     return result
 
 
-upper = upper_triangle(in_system)
+upper = triangulator(in_system)
 
 print(upper)
 
@@ -116,22 +116,3 @@ print(matrix1)
 check1 = m_multiplication(results, matrix1)
 
 print(check1)
-
-# Two rows must not have same number of leading zeroes.
-def pivoteo(matrix):
-    result = deepcopy(matrix)
-    for i in range(len(matrix)):
-        k = len(matrix)
-        for j in range(len(matrix)):
-            if matrix[i][j] != 0:
-                k = j
-                break
-        print(k)
-        if k == len(matrix):
-            return "Found a row full of zeroes!"
-        result[k] = matrix[i]
-    return result
-
-
-
-

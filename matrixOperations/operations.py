@@ -1,5 +1,5 @@
 
-from math import factorial, pi, sin, cos
+from math import factorial
 
 from copy import deepcopy
 
