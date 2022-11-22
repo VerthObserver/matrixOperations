@@ -31,7 +31,7 @@ def sorter(system):
                 sorted_system[j] = old_row
                 break
         if sorted_system[i][i] == 0:
-            sys.exit(f"ZeroVariableError: No non-zero value for variable {i + 1} found.")
+            sys.exit(f"ZeroCoefficientError: No non-zero coefficient for variable {i + 1} found.")
     return sorted_system
 
 
